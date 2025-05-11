@@ -3,13 +3,13 @@
 #include <chrono>
 #include <cstdlib>
 #include <algorithm>
-#include <random>  // For std::shuffle
-#include <iomanip> // For formatting output
+#include <random>
+#include <iomanip>
 
 using namespace std;
 using namespace chrono;
 
-// Function to simulate register-only operations
+// Measure access time for register-local operations
 double measure_registers(int value) {
     volatile int reg_copy = value;
     auto start = high_resolution_clock::now();
@@ -20,7 +20,7 @@ double measure_registers(int value) {
     return duration<double>(end - start).count();
 }
 
-// Function to simulate cache access with sequential memory
+// Measure access time for sequential memory access (cache friendly)
 double measure_cache(vector<int>& data, size_t size) {
     volatile int sum = 0;
     auto start = high_resolution_clock::now();
@@ -31,7 +31,7 @@ double measure_cache(vector<int>& data, size_t size) {
     return duration<double>(end - start).count();
 }
 
-// Function to simulate RAM access with random memory access
+// Measure access time for random memory access (forces RAM usage)
 double measure_ram(vector<int>& data) {
     size_t N = data.size();
     vector<size_t> indices(N);
@@ -50,7 +50,7 @@ double measure_ram(vector<int>& data) {
     return duration<double>(end - start).count();
 }
 
-// Function to print multiples relative to the fastest time
+// Print multiples of access times relative to the fastest
 void print_multiples(const vector<string>& labels, const vector<double>& times) {
     double min_time = *min_element(times.begin(), times.end());
     cout << "\nAccess Time Multiples (relative to fastest):\n";
@@ -59,10 +59,10 @@ void print_multiples(const vector<string>& labels, const vector<double>& times) 
     }
 }
 
-// Function to draw ASCII bar graph
+// Draw an ASCII bar graph for access times
 void draw_graph(const vector<string>& labels, const vector<double>& times) {
     double max_time = *max_element(times.begin(), times.end());
-    double scale = 50.0 / max_time; // Scale bars to 50 chars max
+    double scale = 50.0 / max_time; // Scale bars to fit 50 characters
 
     cout << "\nAccess Time Graph (relative)\n";
     cout << "-----------------------------\n";
@@ -75,7 +75,7 @@ void draw_graph(const vector<string>& labels, const vector<double>& times) {
     }
 }
 
-// Main experiment controller
+// Run the full benchmark experiment
 void run_experiment(vector<int>& data) {
     const size_t l1_size = 32 * 1024 / sizeof(int);
     const size_t l2_size = 256 * 1024 / sizeof(int);
@@ -100,7 +100,7 @@ void run_experiment(vector<int>& data) {
 }
 
 int main() {
-    const size_t N = 100 * 1024 * 1024 / sizeof(int); // Allocate ~100MB
+    const size_t N = 100 * 1024 * 1024 / sizeof(int); // Allocate ~100MB array
     vector<int> data(N, 1); // Initialize all elements to 1
 
     cout << "Memory Access Timing Experiment\n";
