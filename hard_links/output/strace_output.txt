@@ -1,0 +1,45 @@
+========= CREATE HARD LINK =========
+$ ln file1.txt file1_hardlink.txt
+
+15    execve("/usr/bin/ln", ["ln", "file1.txt", "file1_hardlink.txt"], 0xffffc07ad6f8 /* 9 vars */) = 0
+15    faccessat(AT_FDCWD, "/etc/ld.so.preload", R_OK) = -1 ENOENT (No such file or directory)
+15    openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+15    newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=5643, ...}, AT_EMPTY_PATH) = 0
+15    openat(AT_FDCWD, "/lib/aarch64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+15    newfstatat(3, "", {st_mode=S_IFREG|0755, st_size=1637400, ...}, AT_EMPTY_PATH) = 0
+15    linkat(AT_FDCWD, "file1.txt", AT_FDCWD, "file1_hardlink.txt", 0) = 0
+15    +++ exited with 0 +++
+
+
+
+========= REMOVE HARD LINK =========
+$ rm file1_hardlink.txt
+
+20    execve("/usr/bin/rm", ["rm", "file1_hardlink.txt"], 0xffffe06594d0 /* 9 vars */) = 0
+20    faccessat(AT_FDCWD, "/etc/ld.so.preload", R_OK) = -1 ENOENT (No such file or directory)
+20    openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+20    newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=5643, ...}, AT_EMPTY_PATH) = 0
+20    openat(AT_FDCWD, "/lib/aarch64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+20    newfstatat(3, "", {st_mode=S_IFREG|0755, st_size=1637400, ...}, AT_EMPTY_PATH) = 0
+20    newfstatat(AT_FDCWD, "file1_hardlink.txt", {st_mode=S_IFREG|0644, st_size=12, ...}, AT_SYMLINK_NOFOLLOW) = 0
+20    unlinkat(AT_FDCWD, "file1_hardlink.txt", 0) = 0
+20    +++ exited with 0 +++
+
+
+
+========= CAT ORIGINAL FILE =========
+$ cat file1.txt
+
+25    execve("/usr/bin/cat", ["cat", "file1.txt"], 0xffffdf9242a0 /* 9 vars */) = 0
+25    faccessat(AT_FDCWD, "/etc/ld.so.preload", R_OK) = -1 ENOENT (No such file or directory)
+25    openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+25    newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=5643, ...}, AT_EMPTY_PATH) = 0
+25    openat(AT_FDCWD, "/lib/aarch64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+25    newfstatat(3, "", {st_mode=S_IFREG|0755, st_size=1637400, ...}, AT_EMPTY_PATH) = 0
+25    newfstatat(1, "", {st_mode=S_IFCHR|0620, st_rdev=makedev(0x88, 0), ...}, AT_EMPTY_PATH) = 0
+25    openat(AT_FDCWD, "file1.txt", O_RDONLY) = 3
+25    newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=12, ...}, AT_EMPTY_PATH) = 0
+25    +++ exited with 0 +++
+
+
+

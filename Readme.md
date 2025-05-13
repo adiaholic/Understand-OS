@@ -9,3 +9,6 @@ This repository contains a collection of small projects exploring low-level syst
 
 * [`inspect_registers/`](./inspect_registers/):
   Read and flush CPU registers on ARM64; observe system constraints and behavior.
+
+* [`hard_links/`](./hard_links/):
+  Trace and analyze system calls (`linkat`, `unlinkat`, `openat`) involved in creating, deleting, and reading hard links.
