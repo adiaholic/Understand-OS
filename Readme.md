@@ -12,3 +12,6 @@ This repository contains a collection of small projects exploring low-level syst
 
 * [`hard_links/`](./hard_links/):
   Trace and analyze system calls (`linkat`, `unlinkat`, `openat`) involved in creating, deleting, and reading hard links.
+
+* [`processes_and_cgroups/`](./processes_and_cgroups/):
+  Create cgroups for processes and experiment with memory limits to trigger OOM conditions.
